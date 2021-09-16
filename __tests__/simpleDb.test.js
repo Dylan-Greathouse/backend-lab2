@@ -10,7 +10,7 @@ describe('simple data structure test', () => {
     });
   });
 
-  it('save object has id', () => {
+  it.skip('save object has id', () => {
 
   });
 
