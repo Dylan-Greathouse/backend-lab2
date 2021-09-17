@@ -5,23 +5,23 @@ import shortid from 'shortid';
 
 export class SimpleDataBase {
   constructor(store) {
-    this.ObjId = shortid.generate();
-    const dataFile = `${this.ObjId}.json`;
-    this.file = path.join(store, dataFile);
+    this.store = store;
   }
 
   save(object) {
-    object['id'] = this.ObjId;
+    object.id = shortid.generate();
     const stringData = JSON.stringify(object);
-    return writeFile(this.file, stringData).then(() => {
-      return this.ObjId;
+    return writeFile(`${this.store}/${object.id}.json`, stringData).then(() => {
+      return object.id;
     });
   }
-  get(object) {
-    return readFile(this.file, object).then((result) => {
-      return JSON.parse(result);
-    });
-  }
+  // get(object) {
+  //   const aFile = JSON.stringify(object) ;
+  //   this.file = path.join(this.store, aFile);
+  //   return readFile(this.file, 'utf-8').then((result) => {
+  //     return JSON.parse(result);
+  //   });
+  // }
   
 
   

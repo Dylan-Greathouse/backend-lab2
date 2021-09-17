@@ -31,9 +31,15 @@ describe('simple data structure test', () => {
     const data = {
       a: 'a',
       b: 'b'
-    }
-      
-      
+    };
+
+
+    return simpleDb
+      .save(data).then((object) => {
+        return simpleDb.get(object).then((result) => {
+          expect(result).toEqual({ a: 'a', b: 'b', id: expect.any(String) });
+        });
+      });   
   });
 
   // it('it should return null if it can not get object', () => {
