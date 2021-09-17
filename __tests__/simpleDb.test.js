@@ -1,8 +1,8 @@
-import { rm, readdir, mkdir } from 'fs/promises';
+import { rm, mkdir } from 'fs/promises';
 import { SimpleDataBase } from '../library/simpleDb';
 
 describe('simple data structure test', () => {
-  const rootDir = '../__tests__/store';
+  const rootDir = './__tests__/store';
     
   beforeEach(() => {
     return rm(rootDir, { force: true, recursive: true }).then(() => {
@@ -10,27 +10,45 @@ describe('simple data structure test', () => {
     });
   });
 
-  it.skip('save object has id', () => {
+  it('save object has id', () => {
+    const simpleDb = new SimpleDataBase(rootDir);
 
+    const data = {
+      a: 'a',
+      b: 'b'
+    };
+
+    return simpleDb
+      .save(data)
+      .then(() => {
+        expect(data.id).toEqual(expect.any(String));
+      });
   });
 
   it('save and get an object', () => {
+    const simpleDb = new SimpleDataBase(rootDir);
 
+    const data = {
+      a: 'a',
+      b: 'b'
+    }
+      
+      
   });
 
-  it.only('it should return null if it can not get object', () => {
-    const keeper = new SimpleDataBase(rootDir);
+  // it('it should return null if it can not get object', () => {
+  //   const keeper = new SimpleDataBase(rootDir);
 
-    return keeper.tell().then((message) => {
-      expect(message).toBeNull();
-    });
-  });
+  //   return keeper.tell().then((message) => {
+  //     expect(message).toBeNull();
+  //   });
+  // });
 
 
 
-  it('return all objects', () => {
+  // it('return all objects', () => {
 
-  });
+  // });
 
 
 });

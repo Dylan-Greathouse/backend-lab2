@@ -5,22 +5,24 @@ import shortid from 'shortid';
 
 export class SimpleDataBase {
   constructor(store) {
-    const dataFile = `${shortid.generate()}.txt`;
+    this.ObjId = shortid.generate();
+    const dataFile = `${this.ObjId}.json`;
     this.file = path.join(store, dataFile);
   }
 
-  keep(object) {
-    return writeFile(this.file, object);
-  }
-
-  tell() {
-    return readFile(this.file, 'utf-8').catch((err) => {
-      if(err.code === 'ENOENT') {
-        return null;
-      }
-      throw err;
+  save(object) {
+    object['id'] = this.ObjId;
+    const stringData = JSON.stringify(object);
+    return writeFile(this.file, stringData).then(() => {
+      return this.ObjId;
     });
   }
+  get(object) {
+    return readFile(this.file, object).then((result) => {
+      return JSON.parse(result);
+    });
+  }
+  
 
   
 }
