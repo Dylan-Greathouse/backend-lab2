@@ -8,20 +8,23 @@ export class SimpleDataBase {
     this.store = store;
   }
 
+  getPath(id) {
+    return `${this.store}/${id}.json`;
+  }
+
   save(object) {
     object.id = shortid.generate();
     const stringData = JSON.stringify(object);
-    return writeFile(`${this.store}/${object.id}.json`, stringData).then(() => {
+    return writeFile(this.getPath(object.id), stringData).then(() => {
       return object.id;
     });
   }
-  // get(object) {
-  //   const aFile = JSON.stringify(object) ;
-  //   this.file = path.join(this.store, aFile);
-  //   return readFile(this.file, 'utf-8').then((result) => {
-  //     return JSON.parse(result);
-  //   });
-  // }
+  get(id) {
+    const letMeIn = this.getPath(id);
+    return readFile(letMeIn, 'utf-8').then((result) => 
+      JSON.parse(result)
+    );
+  }
   
 
   
