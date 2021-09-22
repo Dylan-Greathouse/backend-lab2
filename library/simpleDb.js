@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'fs/promises';
-import path from 'path';
+// import path from 'path';
 import shortid from 'shortid';
 
 
@@ -22,8 +22,11 @@ export class SimpleDataBase {
   get(id) {
     const letMeIn = this.getPath(id);
     return readFile(letMeIn, 'utf-8').then((result) => 
-      JSON.parse(result)
-    );
+      JSON.parse(result)).catch((error) => {
+      if(error) {
+        return null;
+      } throw error;
+    });
   }
   
 

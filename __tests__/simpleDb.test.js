@@ -42,13 +42,20 @@ describe('simple data structure test', () => {
       });   
   });
 
-  // it('it should return null if it can not get object', () => {
-  //   const keeper = new SimpleDataBase(rootDir);
+  it('it should return null if it can not get object', () => {
+    const simpleDb = new SimpleDataBase(rootDir);
+    const data = {
+      a: 666
+    };
+    
 
-  //   return keeper.tell().then((message) => {
-  //     expect(message).toBeNull();
-  //   });
-  // });
+
+    return simpleDb
+      .get(data).then((nullRes) => {
+        expect(nullRes).toBe(null);
+      });
+      
+  });
 
 
 
