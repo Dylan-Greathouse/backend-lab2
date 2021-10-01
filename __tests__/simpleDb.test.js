@@ -2,7 +2,7 @@ import { rm, mkdir } from 'fs/promises';
 import { SimpleDataBase } from '../library/simpleDb';
 
 describe('simple data structure test', () => {
-  const rootDir = './__tests__/store';
+  const rootDir = './store';
     
   beforeEach(() => {
     return rm(rootDir, { force: true, recursive: true }).then(() => {
@@ -59,9 +59,26 @@ describe('simple data structure test', () => {
 
 
 
-  // it('return all objects', () => {
+  it('return all objects', async () => {
+    const simpleDb = new SimpleDataBase(rootDir);
+    const data1 = {
+      a: 'a',
+      b: 'b'
+    };
 
-  // });
+    const data2 = {
+      a: 'a',
+      b: 'b'
+    };
+    const lordyPlease = [data1, data2];
+    await Promise.all(lordyPlease.map((item) => {
+      return simpleDb.save(item);
+    }));
+    return simpleDb
+      .getAll(lordyPlease).then((result) => {
+        expect(result).toEqual(expect.arrayContaining([data1, data2]));
+      });
+  });
 
 
 });
